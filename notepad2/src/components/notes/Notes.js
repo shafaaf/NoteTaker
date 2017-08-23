@@ -48,6 +48,7 @@ class Notes extends React.Component{
 
 // Maps state from store to props
 const mapStateToProps = (state, ownProps) => {
+  console.log("mapStateToProps: state is: ", state);
   return {
     // You can now say this.props.books
     notes: state.notes
