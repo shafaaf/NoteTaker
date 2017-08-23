@@ -1,5 +1,3 @@
-import * as actionTypes from '../actions/actionTypes';
-
 export const notesReducer = (state = [], action) => {
   console.log("notesReducer running.")
   console.log("state is: ", state);
@@ -19,17 +17,3 @@ export const notesReducer = (state = [], action) => {
       return state;
   }
 };
-
-// // For handling a single book
-// export const bookReducer = (state = [], action) => {
-//   console.log("singleBookReducer running.")
-//   console.log("state is: ", state);
-//   console.log("action is: ", action);
-//   switch (action.type) {
-//     case actionTypes.FETCH_BOOK_BY_ID_SUCCESS: // Handle fetch by Id
-//       console.log("Reducer: FETCH_BOOK_BY_ID_SUCCESS");
-//       return action.book;
-//     default:
-//       return state;
-//   }
-// };
