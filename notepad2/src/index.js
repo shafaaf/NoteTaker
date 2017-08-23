@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
-import * as bookActions from './actions/bookActions';
+import * as noteActions from './actions/noteActions';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import configureStore from './store/configureStore';
@@ -12,7 +12,7 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 // Dispatch fetchBooks On Page Load to get initial list
-store.dispatch(bookActions.fetchBooks());
+store.dispatch(noteActions.fetchNotes());
 
 render(
   <Provider store={store}>

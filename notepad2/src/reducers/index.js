@@ -1,10 +1,9 @@
 // Set up your root reducer here...
 
 import { combineReducers } from 'redux';
-import {booksReducer, bookReducer} from './bookReducers'
+import { notesReducer } from './noteReducers'
 
 // Imp: This decides states
 export default combineReducers({
-  books: booksReducer,
-  book: bookReducer
+  notes: notesReducer
 });
