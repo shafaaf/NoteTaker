@@ -14,26 +14,24 @@ class Notes extends React.Component{
     this.props.createNote(input);
   }
 
+  renderNotes(){
+    console.log("this.props.notes is: ", this.props.notes);
+    const listItems = this.props.notes.map((note, index) =>
+      <p key={index}>
+        {note.title}: {note.description}
+      </p>
+    );
+
+    return listItems;
+  }
+
   render(){
     let titleInput;
     return(
       <div className="row">
         <div className="col-md-6">
           <h3>Notes</h3>
-          <table className="table">
-            <thead>
-              <th>
-                <td>Title</td>
-                <td></td>
-              </th>
-            </thead>
-            <tbody>
-            {this.props.notes.map((note, i) => 
-              <tr key={i}>
-                <td>{note.title}</td>  
-              </tr> )}
-            </tbody>
-          </table>
+          {this.renderNotes()}
         </div>
         <div className="col-md-6">
           <h3>New Note</h3>
