@@ -1,5 +1,5 @@
 import Axios from 'axios';
-const apiUrl = 'https://599b99f43a19ba0011949be1.mockapi.io/books';
+const apiUrl = 'https://599d38aa0a785b0011f4f68e.mockapi.io/notes';
 
 // Success Actions
 export const fetchNotesSuccess = (notes) => {
