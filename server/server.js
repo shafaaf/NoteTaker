@@ -4,6 +4,8 @@ var format = require('pg-format')
 var express    = require('express');        
 var app        = express();               
 var bodyParser = require('body-parser');
+var cors = require('cors');
+
 
 var promise = require('bluebird');
 var options = {
@@ -19,8 +21,10 @@ var db = pgp(connectionString);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        
+// Allow CORS
+app.use(cors())
 
+var port = process.env.PORT || 8080;        
 
 // ROUTES FOR OUR API
 // =============================================================================
