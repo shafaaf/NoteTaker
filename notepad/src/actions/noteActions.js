@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const getBooksUrl = 'http://localhost:8080/api/note';
+const booksUrl = 'http://localhost:8080/api/note';
 const addBookUrl = 'http://localhost:8080/api/note/add';
 
 // Success Actions
@@ -18,12 +18,20 @@ export const createNoteSuccess = (note) => {
     note
   }
 };
+export const editNoteSuccess = (note, index) => {
+  console.log("Action dispatched- editNoteSuccess. note is: ", note);
+  return {
+    type: "EDIT_NOTE_SUCCESS",
+    note,
+    index
+  }
+};
 
 // Async actions
 export const fetchNotes = () => {
   console.log("Action dispatched- fetchNotes");
   return (dispatch) => {
-    return Axios.get(getBooksUrl)
+    return Axios.get(booksUrl)
       .then(response => {
         console.log("response is: ", response);
         dispatch(fetchNotesSuccess(response.data.data));
@@ -46,16 +54,18 @@ export const createNote = (note) => {
       });
   };
 };
-export const editNote = (note) => {
+export const editNote = (note, index) => {
   console.log("Action dispatched- editNote. note is: ", note);
-  // return (dispatch) => {
-  //   return Axios.post(addBookUrl, note)
-  //     .then(response => {
-  //       console.log("response is: ", response);
-  //       dispatch(createNoteSuccess(note));
-  //     })
-  //     .catch(error => {
-  //       throw(error);
-  //     });
-  // };
+  var putUrl = booksUrl + "/" + note.id;
+  return (dispatch) => {
+    return Axios.put(putUrl, note)
+      .then(response => {
+        console.log("response.data is: ", response.data);
+        dispatch(editNoteSuccess(note, index));
+      })
+      .catch(error => {
+        console.log("error is: ", error);
+        throw(error);
+      });
+  };
 };

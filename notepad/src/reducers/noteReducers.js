@@ -15,6 +15,16 @@ export const notesReducer = (state = [], action) => {
       console.log("Reducer: FETCH_NOTES_SUCCESS");
       return action.notes;
     
+    case 'EDIT_NOTE_SUCCESS':
+      console.log("Reducer: EDIT_NOTE_SUCCESS");
+      console.log("Reducer- index is: ", action.index);
+      var i = action.index;
+      return [
+        ...state.slice(0, i),  
+        {... state[i], title: action.note.title },
+        ...state.slice(i+1)
+      ];
+
     default:
       console.log("Reducer: default");
       return state;

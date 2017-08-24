@@ -19,9 +19,15 @@ class Notes extends React.Component{
     this.props.createNote(input);
   }
 
-  validateTitleEdit(title){
-    console.log("At validateTitleEdit. title is: ", title);
-    return true;
+  validateTitleEdit(index, oldNote, newTitle){
+    console.log("At validateTitleEdit. index is: ", index);
+    console.log("At validateTitleEdit. oldNote is: ", oldNote);
+    console.log("At validateTitleEdit. newTitle is: ", newTitle);
+    var newNote = Object.assign({}, oldNote);
+    newNote["title"] = newTitle;
+    console.log("newNote is: ", newNote);
+    this.props.editNote(newNote, index);
+    return false;
   }
 
   titleChanged(title){
@@ -29,16 +35,17 @@ class Notes extends React.Component{
   }
 
   renderNotes(){
-    console.log("this.props.notes is: ", this.props.notes);
+    console.log("renderNotes: this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
       <Draggable bounds="parent" key={index}>
         <li>
           <a style = {{ textDecoration:"none", color: "#000000"}}>
             <h2>
-              <InlineEdit validate={this.validateTitleEdit.bind(this, note.title)} activeClassName="editing" text={note.title} 
+              <InlineEdit validate={this.validateTitleEdit.bind(this, index, note)} activeClassName="editing" text={note.title} 
                 paramName="newCategory" change={this.titleChanged.bind(this, note.title)}/>
             </h2>
             <p>{note.description}</p>
+            <p>{note.id}</p>            
           </a>
         </li>
       </Draggable>
