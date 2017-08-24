@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import NoteForm from './NoteForm';
 import { Link } from 'react-router';
-import * as noteActions from '../../actions/noteActions';
+import * as noteActions from '../actions/noteActions';
 
 class Notes extends React.Component{
   constructor(props){
@@ -21,7 +21,6 @@ class Notes extends React.Component{
         {note.title}: {note.description}
       </p>
     );
-
     return listItems;
   }
 

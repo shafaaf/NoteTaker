@@ -1,7 +1,7 @@
 import React  from 'react';
 import {Route, IndexRoute} from 'react-router';
 import Home from './components/HomePage'
-import Notes from './components/notes/Notes'
+import Notes from './components/Notes'
 
 import App from './components/App'
 

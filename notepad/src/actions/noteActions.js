@@ -26,7 +26,7 @@ export const fetchNotes = () => {
     return Axios.get(getBooksUrl)
       .then(response => {
         console.log("response is: ", response);
-        dispatch(fetchNotesSuccess(response.data.data))
+        dispatch(fetchNotesSuccess(response.data.data));
       })
       .catch(error => {
         throw(error);
@@ -39,7 +39,7 @@ export const createNote = (note) => {
     return Axios.post(addBookUrl, note)
       .then(response => {
         console.log("response is: ", response);
-        dispatch(createNoteSuccess(note))
+        dispatch(createNoteSuccess(note));
       })
       .catch(error => {
         throw(error);
