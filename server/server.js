@@ -42,17 +42,30 @@ router.get('/', function(req, res) {
 router.get('/note', function(req, res) {
         console.log("GET request at /note");
         // console.log("req is: ", req);
-        var limit = req.query.limit;
-        var order = "desc";
-        if(req.query.order != undefined){
-        	order = req.query.order;
-        }
-		var start = req.query.start;
         
+        var limitSQL = "";
+        if(req.query.limit != undefined){
+        	var limit = req.query.limit;
+        	limitSQL = "limit " + limit;
+        }
+
+        var orderSQL = "order by creationtime desc";
+       	if(req.query.order != undefined){
+        	var order = req.query.order;
+        	orderSQL = "order by creationtime " + order;
+        }
+
+		var startSQL = "";
+		if(req.query.start != undefined){
+        	var start = req.query.start - 1;
+        	startSQL = "offset " + start;
+        }       
+
         console.log("limit is: ", limit);
 		console.log("order is: ", order);
         console.log("start is: ", start);
-        var sqlQuery = 'select * from notestable order by creationtime ' + order;
+        var sqlQuery = 'select * from notestable ' + orderSQL + " " + limitSQL + " " + startSQL;
+        console.log("sqlQuery is: ", sqlQuery);
 		db.any(sqlQuery)
 			.then(function (data) {
 				console.log("data is: ", data);
@@ -60,7 +73,7 @@ router.get('/note', function(req, res) {
 				.json({
 					status: 'success',
 					data: data,
-					message: 'Retrieved ALL notes'
+					message: 'Retrieved notes'
 				});
 			})
 			.catch(function (err) {
