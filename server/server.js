@@ -42,7 +42,18 @@ router.get('/', function(req, res) {
 router.get('/note', function(req, res) {
         console.log("GET request at /note");
         // console.log("req is: ", req);
-		db.any('select * from notestable')
+        var limit = req.query.limit;
+        var order = "desc";
+        if(req.query.order != undefined){
+        	order = req.query.order;
+        }
+		var start = req.query.start;
+        
+        console.log("limit is: ", limit);
+		console.log("order is: ", order);
+        console.log("start is: ", start);
+        var sqlQuery = 'select * from notestable order by creationtime ' + order;
+		db.any(sqlQuery)
 			.then(function (data) {
 				console.log("data is: ", data);
 				res.status(200)
@@ -67,7 +78,7 @@ router.get('/note/:id', function(req, res) {
         console.log("req.params is: ", req.params);
 		var noteId = parseInt(req.params.id);
 		console.log("noteId is: ", noteId);
-		db.one('select * from notestable where id = $1', noteId)
+		db.one('select * from notestable where id = $1', [noteId])
 		.then(function (data) {
 			console.log("data is: ", data);
 			res.status(200)
