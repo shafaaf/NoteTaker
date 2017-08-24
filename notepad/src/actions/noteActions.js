@@ -69,3 +69,19 @@ export const editNote = (note, index) => {
       });
   };
 };
+export const deleteNote = (note, index) => {
+  console.log("Action dispatched- deleteNote. note is: ", note);
+  var deleteUrl = booksUrl + "/" + note.id;
+  return (dispatch) => {
+    return Axios.delete(deleteUrl)
+      .then(response => {
+        console.log("response.data is: ", response.data);
+        // dispatch(editNoteSuccess(note, index));
+      })
+      .catch(error => {
+        console.log("error is: ", error);
+        throw(error);
+      });
+  };
+};
+

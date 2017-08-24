@@ -19,6 +19,7 @@ class Notes extends React.Component{
     this.props.createNote(input);
   }
 
+  // Todo: Called twice so fix
   validateTitleEdit(index, oldNote, newTitle){
     console.log("At validateTitleEdit. index is: ", index);
     console.log("At validateTitleEdit. oldNote is: ", oldNote);
@@ -34,6 +35,22 @@ class Notes extends React.Component{
      console.log("At titleChanged. title is: ", title);
   }
 
+  // Todo: Called twice so fix
+  validateDescriptionEdit(index, oldNote, newDescription){
+    console.log("At validateDescriptionEdit. index is: ", index);
+    console.log("At validateDescriptionEdit. oldNote is: ", oldNote);
+    console.log("At validateDescriptionEdit. newDescription is: ", newDescription);
+    var newNote = Object.assign({}, oldNote);
+    newNote["description"] = newDescription;
+    console.log("newNote is: ", newNote);
+    this.props.editNote(newNote, index);
+    return false;
+  }
+
+  descriptionChanged(description){
+    console.log("At descriptionChanged. description is: ", description);
+  }
+
   renderNotes(){
     console.log("renderNotes: this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
@@ -44,8 +61,11 @@ class Notes extends React.Component{
               <InlineEdit validate={this.validateTitleEdit.bind(this, index, note)} activeClassName="editing" text={note.title} 
                 paramName="newCategory" change={this.titleChanged.bind(this, note.title)}/>
             </h2>
-            <p>{note.description}</p>
-            <p>{note.id}</p>            
+            <p>
+              <InlineEdit validate={this.validateDescriptionEdit.bind(this, index, note)} activeClassName="editing" text={note.description} 
+                paramName="newCategory" change={this.descriptionChanged.bind(this, note.description)}/>
+            </p>
+            
           </a>
         </li>
       </Draggable>
