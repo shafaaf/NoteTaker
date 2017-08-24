@@ -4,6 +4,7 @@ import NoteForm from './NoteForm';
 import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
 import Draggable, {DraggableCore} from 'react-draggable';
+import InlineEdit from 'react-edit-inline';
 
 import './css/notes.css';
 
@@ -17,13 +18,25 @@ class Notes extends React.Component{
     this.props.createNote(input);
   }
 
+  validateTitleEdit(title){
+    console.log("At validateTitleEdit. title is: ", title);
+    return true;
+  }
+
+  titleChanged(title){
+     console.log("At titleChanged. title is: ", title);
+  }
+
   renderNotes(){
     console.log("this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
       <Draggable bounds="parent" key={index}>
         <li>
           <a style = {{ textDecoration:"none", color: "#000000"}}>
-            <h2>{note.title}</h2>
+            <h2>
+              <InlineEdit validate={this.validateTitleEdit.bind(this, note.title)} activeClassName="editing" text={note.title} 
+                paramName="newCategory" change={this.titleChanged.bind(this, note.title)}/>
+            </h2>
             <p>{note.description}</p>
           </a>
         </li>

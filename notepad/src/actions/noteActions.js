@@ -46,3 +46,16 @@ export const createNote = (note) => {
       });
   };
 };
+export const editNote = (note) => {
+  console.log("Action dispatched- editNote. note is: ", note);
+  // return (dispatch) => {
+  //   return Axios.post(addBookUrl, note)
+  //     .then(response => {
+  //       console.log("response is: ", response);
+  //       dispatch(createNoteSuccess(note));
+  //     })
+  //     .catch(error => {
+  //       throw(error);
+  //     });
+  // };
+};
