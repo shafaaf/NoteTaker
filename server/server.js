@@ -37,7 +37,6 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-
 // Todo: Query Paramters
 // GET all the notes (accessed at GET http://localhost:8080/api/note/add)
 router.get('/note', function(req, res) {
@@ -55,11 +54,13 @@ router.get('/note', function(req, res) {
 			})
 			.catch(function (err) {
 				console.log("err is: ", err);
-				return next(err);
+				res.json(400, {
+					status: 'error',
+					message: err.message
+				});
 			});
-		// res.json("GET request at /note");
     });
-
+	
 // GET specific note based on id (accessed at GET http://localhost:8080/api/note/:note_id)
 router.get('/note/:id', function(req, res) {
         console.log("GET request at /note/:id");
@@ -79,7 +80,7 @@ router.get('/note/:id', function(req, res) {
 		.catch(function (err) {
 			// return next(err);
 			console.log("err is: ", err);
-			res.json({
+			res.json(400, {
 				status: 'error',
 				message: err.message
 			});
@@ -135,7 +136,7 @@ router.delete('/note/:id', function(req, res) {
 	    })
 	    .catch(function (err) {
 	      	console.log("err is: ", err);
-			res.json({
+			res.json(400, {
 				status: 'error',
 				message: err.message
 			});
@@ -163,7 +164,7 @@ router.post('/note/add', function(req, res) {
 		.catch(function (err) {
 			console.log("err is: ", err);
 			// return next(err);
-			res.json({
+			res.json(400, {
 				status: 'error',
 				message: err.message
 			});

@@ -5,6 +5,7 @@ CREATE DATABASE notes;
 
 CREATE TABLE notesTable (
   ID SERIAL PRIMARY KEY,
+  creationTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title VARCHAR,
   description VARCHAR
 );
