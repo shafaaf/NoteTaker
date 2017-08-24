@@ -35,8 +35,9 @@ class Notes extends React.Component{
   render(){
     let titleInput;
     return(
-      <div className="row">
-        <div className="col-md-6" style = {{border: "3px solid black"}}>
+    
+       <div className="row">
+        <div className="col-md-12" style = {{border: "3px solid black"}}>
           <h3 style = {{textAlign: "center"}}>My Notes</h3>
           <ul>
             {this.renderNotes()}
@@ -49,7 +50,6 @@ class Notes extends React.Component{
         </div>
       </div>
     );
-    // return (<h1>Hii</h1>)
   }
 }
 
