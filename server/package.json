@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "mysql": "^2.14.1",
     "pg": "^7.2.0",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "pg-promise": "^5.9.7"
   }
 }
