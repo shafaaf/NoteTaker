@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import NoteForm from './NoteForm';
 import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
@@ -76,12 +77,16 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 // Maps actions to props
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // You can now say this.props.createNote
-    createNote: note => dispatch(noteActions.createNote(note))
-  }
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     // You can now say this.props.createNote
+//     createNote: note => dispatch(noteActions.createNote(note))
+//   }
+// };
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(noteActions, dispatch);
+}
 
 // Use connect to put them together
 export default connect(mapStateToProps, mapDispatchToProps)(Notes);
