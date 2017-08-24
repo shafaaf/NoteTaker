@@ -28,7 +28,7 @@ var router = express.Router();
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-    console.log('Middleware running.');
+    console.log('Middleware running.\n\n');
     next(); 
 });
 
@@ -37,6 +37,8 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
+
+// Todo: Query Paramters
 // GET all the notes (accessed at GET http://localhost:8080/api/note/add)
 router.get('/note', function(req, res) {
         console.log("GET request at /note");
@@ -58,6 +60,88 @@ router.get('/note', function(req, res) {
 		// res.json("GET request at /note");
     });
 
+// GET specific note based on id (accessed at GET http://localhost:8080/api/note/:note_id)
+router.get('/note/:id', function(req, res) {
+        console.log("GET request at /note/:id");
+        console.log("req.params is: ", req.params);
+		var noteId = parseInt(req.params.id);
+		console.log("noteId is: ", noteId);
+		db.one('select * from notestable where id = $1', noteId)
+		.then(function (data) {
+			console.log("data is: ", data);
+			res.status(200)
+			.json({
+				status: 'success',
+				data: data,
+				message: 'Retrieved specific note based on note_id'
+			});
+		})
+		.catch(function (err) {
+			// return next(err);
+			console.log("err is: ", err);
+			res.json({
+				status: 'error',
+				message: err.message
+			});
+		});
+    });
+
+
+// Todo: catch errors
+// UPDATE specific note based on id (accessed at PUT http://localhost:8080/api/note/:note_id)
+router.put('/note/:id', function(req, res) {
+        console.log("PUT request at /note/:id");
+        console.log("req.params is: ", req.params);
+		var noteId = parseInt(req.params.id);
+		var title = req.body.title;
+    	var description = req.body.description;
+    	console.log("noteId is: ", noteId);
+    	console.log("title is: ", title);
+    	console.log("description is: ", description);
+		
+		db.none('update notestable set title=$1, description=$2 where id=$3',
+			[title, description, noteId])
+		.then(function () {
+			res.status(200)
+			.json({
+				status: 'success',
+				message: 'Updated note'
+			});
+		})
+		.catch(function (err) {
+			console.log("err is: ", err);
+			res.json({
+				status: 'error',
+				message: err.message
+			});
+		});	
+    });
+
+// Todo: catch errors
+// GET specific note based on id (accessed at GET http://localhost:8080/api/note/:note_id)
+router.delete('/note/:id', function(req, res) {
+        console.log("delete request at /note/:id");
+        console.log("req.params is: ", req.params);
+		var noteId = parseInt(req.params.id);
+		console.log("noteId is: ", noteId);
+		db.result('delete from notestable where id = $1', noteId)
+	    .then(function (result) {
+	    	console.log("result is: ", result);
+	      	res.status(200)
+	        .json({
+	          status: 'success',
+	          message: `Removed ${result.rowCount} notes`
+	        });
+	    })
+	    .catch(function (err) {
+	      	console.log("err is: ", err);
+			res.json({
+				status: 'error',
+				message: err.message
+			});
+	    });
+    });
+
 // Create a note (accessed at POST http://localhost:8080/api/note/add)
 router.post('/note/add', function(req, res) {
     	console.log("post request at /note/add");
@@ -66,7 +150,6 @@ router.post('/note/add', function(req, res) {
     	var description = req.body.description;
     	console.log("title is: ", title);
     	console.log("description is: ", description);
-
 		db.none('insert into notestable(title, description)' +
 			'values(${title}, ${description})',
 				req.body)
@@ -74,17 +157,19 @@ router.post('/note/add', function(req, res) {
 			res.status(200)
 			.json({
 				status: 'success',
-				message: 'Inserted one note'
+				message: 'Inserted note'
 			});
 		})
 		.catch(function (err) {
 			console.log("err is: ", err);
-			return next(err);
-		});
-		
-    	// res.json("post request at /note/add");
+			// return next(err);
+			res.json({
+				status: 'error',
+				message: err.message
+			});
+		});		
     });
-    
+
 
 // Register our routes
 app.use('/api', router); // all of our routes will be prefixed with /api
