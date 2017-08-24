@@ -20,7 +20,7 @@ class Notes extends React.Component{
     console.log("this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
       <li key={index}>
-        <a href="#">
+        <a style = {{ textDecoration:"none", color: "#000000"}}>
           <h2>{note.title}</h2>
           <p>{note.description}</p>
         </a>
@@ -34,7 +34,7 @@ class Notes extends React.Component{
     return(
       <div className="row">
         <div className="col-md-6">
-          <h3>Notes</h3>
+          <h3 style = {{textAlign: "center"}}>My Notes</h3>
           <ul>
             {this.renderNotes()}
           </ul>
