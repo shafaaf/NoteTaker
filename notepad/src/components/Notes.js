@@ -4,6 +4,8 @@ import NoteForm from './NoteForm';
 import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
 
+import './css/notes.css';
+
 class Notes extends React.Component{
   constructor(props){
     super(props);
@@ -17,9 +19,12 @@ class Notes extends React.Component{
   renderNotes(){
     console.log("this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
-      <p key={index}>
-        {note.title}: {note.description}
-      </p>
+      <li key={index}>
+        <a href="#">
+          <h2>{note.title}</h2>
+          <p>{note.description}</p>
+        </a>
+      </li>
     );
     return listItems;
   }
@@ -30,7 +35,9 @@ class Notes extends React.Component{
       <div className="row">
         <div className="col-md-6">
           <h3>Notes</h3>
-          {this.renderNotes()}
+          <ul>
+            {this.renderNotes()}
+          </ul>
         </div>
         <div className="col-md-6">
           <h3>New Note</h3>
