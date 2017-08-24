@@ -40,7 +40,6 @@ router.get('/', function(req, res) {
 // GET all the notes (accessed at GET http://localhost:8080/api/note/add)
 router.get('/note', function(req, res) {
         console.log("GET request at /note");
-
         // console.log("req is: ", req);
 		db.any('select * from notestable')
 			.then(function (data) {
@@ -62,8 +61,28 @@ router.get('/note', function(req, res) {
 // Create a note (accessed at POST http://localhost:8080/api/note/add)
 router.post('/note/add', function(req, res) {
     	console.log("post request at /note/add");
-    	// console.log("req is: ", req);
-    	res.json("post request at /note/add");
+    	// console.log("req.body is: ", req.body);
+    	var title = req.body.title;
+    	var description = req.body.description;
+    	console.log("title is: ", title);
+    	console.log("description is: ", description);
+
+		db.none('insert into notestable(title, description)' +
+			'values(${title}, ${description})',
+				req.body)
+		.then(function () {
+			res.status(200)
+			.json({
+				status: 'success',
+				message: 'Inserted one note'
+			});
+		})
+		.catch(function (err) {
+			console.log("err is: ", err);
+			return next(err);
+		});
+		
+    	// res.json("post request at /note/add");
     });
     
 
