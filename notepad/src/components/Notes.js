@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import NoteForm from './NoteForm';
 import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
+import Draggable, {DraggableCore} from 'react-draggable';
 
 import './css/notes.css';
 
@@ -19,12 +20,14 @@ class Notes extends React.Component{
   renderNotes(){
     console.log("this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
-      <li key={index}>
-        <a style = {{ textDecoration:"none", color: "#000000"}}>
-          <h2>{note.title}</h2>
-          <p>{note.description}</p>
-        </a>
-      </li>
+      <Draggable bounds="parent" key={index}>
+        <li>
+          <a style = {{ textDecoration:"none", color: "#000000"}}>
+            <h2>{note.title}</h2>
+            <p>{note.description}</p>
+          </a>
+        </li>
+      </Draggable>
     );
     return listItems;
   }
@@ -33,7 +36,7 @@ class Notes extends React.Component{
     let titleInput;
     return(
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-6" style = {{border: "3px solid black"}}>
           <h3 style = {{textAlign: "center"}}>My Notes</h3>
           <ul>
             {this.renderNotes()}
