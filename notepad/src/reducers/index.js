@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { notesReducer } from './notesReducers'
+import { notesReducer } from './noteReducers'
 
+var shafaaf = "test";
+// Imp: This decides states
 export default combineReducers({
-	notes: notesReducer
-	// shaf: []
-	// More reducers if there are
-	// can go here
+  notes: notesReducer,
+  shafaaf: notesReducer
 });

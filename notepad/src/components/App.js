@@ -2,12 +2,13 @@ import React  from 'react';
 import {Link} from 'react-router';
 
 const App = (props) => {
-	return (
-		<div>
-			<h1 style = {{textAlign: "center"}}>Shafaafs sticky notes</h1>
-			{props.children}
-		</div>
-	);
+  return (
+    <div className="container">
+      <h1>Shafaaf Notes</h1>
+      {/* Each smaller components */}
+      {props.children}
+    </div>
+  );
 };
 
-export default App;
+export default App
