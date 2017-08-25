@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
 import Draggable, {DraggableCore} from 'react-draggable';
 import InlineEdit from 'react-edit-inline';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button, Glyphicon, DropdownButton, MenuItem, Dropdown } from 'react-bootstrap';
 import './css/notes.css';
 
 class Notes extends React.Component{
@@ -51,11 +51,14 @@ class Notes extends React.Component{
   }
 
   onClickRemove(index){
-    console.log("onClickRemove called. index to delete is: ", index);
+    console.log("onClickRemove called. index is: ", index);
     var noteToDelete = this.props.notes[index];
     console.log("noteToDelete is: ", noteToDelete);
     this.props.deleteNote(noteToDelete, index);
     return;
+  }
+  onClickColorChange(color){
+    console.log("onClickColorChange called. color is: ", color);
   }
 
   renderNotes(){
@@ -63,7 +66,7 @@ class Notes extends React.Component{
     const listItems = this.props.notes.map((note, index) =>
       <Draggable bounds="parent" key={index}>
         <li>
-          <a style = {{ textDecoration:"none", color: "#000000"}}>        
+          <a style = {{ textDecoration:"none", color: "#000000", background:"#ffc"}}>  {/*style = {{background:"#cfc"}}*/}       
             <h2 style = {{textAlign: "center"}}>
               <InlineEdit 
                 validate={this.validateTitleEdit.bind(this, index)} 
@@ -72,14 +75,21 @@ class Notes extends React.Component{
                 paramName="message" 
                 change={this.titleChanged}/>
                 
-                <Glyphicon 
-                  glyph="tag" 
-                  style = {{paddingLeft: "20px"}}/>
+              <Glyphicon
+                glyph="remove" 
+                style = {{paddingLeft: "20px"}}
+                onClick = {this.onClickRemove.bind(this, index)}/>
 
-                <Glyphicon 
-                  glyph="remove" 
-                  style = {{paddingLeft: "7px"}}
-                  onClick = {this.onClickRemove.bind(this, index)}/>
+                <Dropdown style = {{paddingLeft: "7px"}} id="dropdown-custom-1" onSelect={function(evt){console.log(evt)}}>       
+                  <Dropdown.Toggle style = {{background: "#ffc"}}>
+                    <Glyphicon glyph="tag"/>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="super-colors" onSelect={function(evt){console.log(evt)}}>
+                    <p onClick= {this.onClickColorChange.bind(this, "#cfc")} style = {{background: "#cfc", textAlign: "center", cursor: "pointer"}}>Cyan</p>
+                    <p onClick= {this.onClickColorChange.bind(this, "#ffc")} style = {{background: "#ffc", textAlign: "center", cursor: "pointer"}}>Yellow</p>
+                    <p onClick= {this.onClickColorChange.bind(this, "#ccf")} style = {{background: "#ccf", textAlign: "center", cursor: "pointer"}}>Purple</p>
+                  </Dropdown.Menu>
+                </Dropdown>
             </h2>
             <p>
               <InlineEdit 
