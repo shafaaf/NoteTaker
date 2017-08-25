@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
 import Draggable, {DraggableCore} from 'react-draggable';
 import InlineEdit from 'react-edit-inline';
-
+import { Button, Glyphicon } from 'react-bootstrap';
 import './css/notes.css';
 
 class Notes extends React.Component{
@@ -20,29 +20,28 @@ class Notes extends React.Component{
   }
 
   // Todo: Called twice so fix
-  validateTitleEdit(index, oldNote, newTitle){
+  validateTitleEdit(index, text){
     console.log("At validateTitleEdit. index is: ", index);
-    console.log("At validateTitleEdit. oldNote is: ", oldNote);
-    console.log("At validateTitleEdit. newTitle is: ", newTitle);
-    var newNote = Object.assign({}, oldNote);
-    newNote["title"] = newTitle;
-    console.log("newNote is: ", newNote);
+    console.log("At validateTitleEdit. new text is: ", text);
+    console.log("validateTitleEdit: this.props.notes is: ", this.props.notes);
+    var newNote = Object.assign({}, this.props.notes[index]);
+    newNote["title"] = text;
+    console.log("validateTitleEdit: newNote is: ", newNote);
     this.props.editNote(newNote, index);
     return false;
   }
 
-  titleChanged(title){
-     console.log("At titleChanged. title is: ", title);
+  titleChanged(data){
+    console.log("At titleChanged. data is: ", data);
   }
 
-  // Todo: Called twice so fix
-  validateDescriptionEdit(index, oldNote, newDescription){
+  validateDescriptionEdit(index, text){
     console.log("At validateDescriptionEdit. index is: ", index);
-    console.log("At validateDescriptionEdit. oldNote is: ", oldNote);
-    console.log("At validateDescriptionEdit. newDescription is: ", newDescription);
-    var newNote = Object.assign({}, oldNote);
-    newNote["description"] = newDescription;
-    console.log("newNote is: ", newNote);
+    console.log("At validateDescriptionEdit. new text is: ", text);
+    console.log("at validateDescriptionEdit: this.props.notes is: ", this.props.notes);
+    var newNote = Object.assign({}, this.props.notes[index]);
+    newNote["description"] = text;
+    console.log("At validateDescriptionEdit: newNote is: ", newNote);
     this.props.editNote(newNote, index);
     return false;
   }
@@ -51,21 +50,45 @@ class Notes extends React.Component{
     console.log("At descriptionChanged. description is: ", description);
   }
 
+  onClickRemove(index){
+    console.log("onClickRemove called. index to delete is: ", index);
+    var noteToDelete = this.props.notes[index];
+    console.log("noteToDelete is: ", noteToDelete);
+    this.props.deleteNote(noteToDelete, index);
+    return;
+  }
+
   renderNotes(){
     console.log("renderNotes: this.props.notes is: ", this.props.notes);
     const listItems = this.props.notes.map((note, index) =>
       <Draggable bounds="parent" key={index}>
         <li>
-          <a style = {{ textDecoration:"none", color: "#000000"}}>
-            <h2>
-              <InlineEdit validate={this.validateTitleEdit.bind(this, index, note)} activeClassName="editing" text={note.title} 
-                paramName="newCategory" change={this.titleChanged.bind(this, note.title)}/>
+          <a style = {{ textDecoration:"none", color: "#000000"}}>        
+            <h2 style = {{textAlign: "center"}}>
+              <InlineEdit 
+                validate={this.validateTitleEdit.bind(this, index)} 
+                activeClassName="editing" 
+                text={note.title} 
+                paramName="message" 
+                change={this.titleChanged}/>
+                
+                <Glyphicon 
+                  glyph="tag" 
+                  style = {{paddingLeft: "20px"}}/>
+
+                <Glyphicon 
+                  glyph="remove" 
+                  style = {{paddingLeft: "7px"}}
+                  onClick = {this.onClickRemove.bind(this, index)}/>
             </h2>
             <p>
-              <InlineEdit validate={this.validateDescriptionEdit.bind(this, index, note)} activeClassName="editing" text={note.description} 
-                paramName="newCategory" change={this.descriptionChanged.bind(this, note.description)}/>
-            </p>
-            
+              <InlineEdit 
+                validate={this.validateDescriptionEdit.bind(this, index)} 
+                activeClassName="editing" 
+                text={note.description} 
+                paramName="newCategory" 
+                change={this.descriptionChanged.bind(this, note.description)}/>
+            </p>            
           </a>
         </li>
       </Draggable>
@@ -102,14 +125,6 @@ const mapStateToProps = (state, ownProps) => {
     notes: state.notes
   }
 };
-
-// Maps actions to props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // You can now say this.props.createNote
-//     createNote: note => dispatch(noteActions.createNote(note))
-//   }
-// };
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(noteActions, dispatch);

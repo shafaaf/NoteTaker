@@ -26,6 +26,14 @@ export const editNoteSuccess = (note, index) => {
     index
   }
 };
+export const deleteNoteSuccess = (note, index) => {
+  console.log("Action dispatched- deleteNoteSuccess. note is: ", note);
+  return {
+    type: "DELETE_NOTE_SUCCESS",
+    note,
+    index
+  }
+};
 
 // Async actions
 export const fetchNotes = () => {
@@ -69,14 +77,16 @@ export const editNote = (note, index) => {
       });
   };
 };
-export const deleteNote = (note, index) => {
+export const deleteNote = (note, index) => {  // caution note index is differnet from note id
   console.log("Action dispatched- deleteNote. note is: ", note);
+  console.log("Action dispatched- deleteNote. index is: ", index);
+  
   var deleteUrl = booksUrl + "/" + note.id;
   return (dispatch) => {
     return Axios.delete(deleteUrl)
       .then(response => {
         console.log("response.data is: ", response.data);
-        // dispatch(editNoteSuccess(note, index));
+        dispatch(deleteNoteSuccess(note, index));
       })
       .catch(error => {
         console.log("error is: ", error);
