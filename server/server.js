@@ -124,12 +124,13 @@ router.put('/note/:id', function(req, res) {
 		var noteId = parseInt(req.params.id);
 		var title = req.body.title;
     	var description = req.body.description;
+    	var color = req.body.color;
     	console.log("noteId is: ", noteId);
     	console.log("title is: ", title);
     	console.log("description is: ", description);
-		
-		db.none('update notestable set title=$1, description=$2 where id=$3',
-			[title, description, noteId])
+    	console.log("color is: ", color);
+    	db.none('update notestable set title=$1, description=$2, color=$3 where id=$4',
+			[title, description, color, noteId])
 		.then(function () {
 			res.status(200)
 			.json({
@@ -177,10 +178,13 @@ router.post('/note/add', function(req, res) {
     	// console.log("req.body is: ", req.body);
     	var title = req.body.title;
     	var description = req.body.description;
+    	var color = req.body.color;
     	console.log("title is: ", title);
     	console.log("description is: ", description);
-		db.one('INSERT INTO notestable(title, description)' +
-			' values($1, $2) RETURNING id, creationtime, description, title', [title, description])
+    	console.log("color is: ", color);
+    	
+		db.one('INSERT INTO notestable(title, description, color)' +
+			' values($1, $2, $3) RETURNING id, creationtime, description, title, color', [title, description, color])
 		.then(function (data) {
 			console.log("data from query is: ", data);
 			var note = {};
@@ -188,6 +192,7 @@ router.post('/note/add', function(req, res) {
 			note.creationtime = data.creationtime;
 			note.description = data.description;
 			note.title = data.title;
+			note.color = data.color;
 			
 			res.status(200)
 			.json({

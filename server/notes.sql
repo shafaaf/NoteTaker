@@ -7,8 +7,9 @@ CREATE TABLE notesTable (
   ID SERIAL PRIMARY KEY,
   creationTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title VARCHAR,
-  description VARCHAR
+  description VARCHAR,
+  color VARCHAR
 );
 
-INSERT INTO notesTable (title, description)
-  VALUES ('TestTitle', 'testDescription');
+INSERT INTO notesTable (title, description, color)
+  VALUES ('TestTitle', 'testDescription', 'blue');
