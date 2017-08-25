@@ -60,6 +60,7 @@ export const createNote = (note) => {
         note.creationtime = noteFromServer.creationtime;
         note.title = noteFromServer.title;
         note.description = noteFromServer.description;
+        note.color = noteFromServer.color;
         dispatch(createNoteSuccess(note));
       })
       .catch(error => {

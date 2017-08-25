@@ -15,10 +15,11 @@ class Notes extends React.Component{
   }
   
   submitNote(input){
+    input.color = "#ffc";
     console.log("Submitting note. input is: ", input);
     this.props.createNote(input);
   }
-
+  
   // Todo: Called twice so fix
   validateTitleEdit(index, text){
     console.log("At validateTitleEdit. index is: ", index);
@@ -57,8 +58,14 @@ class Notes extends React.Component{
     this.props.deleteNote(noteToDelete, index);
     return;
   }
-  onClickColorChange(color){
+  onClickColorChange(color, index){
     console.log("onClickColorChange called. color is: ", color);
+    console.log("onClickColorChange called. index is: ", index);
+    var newNote = Object.assign({}, this.props.notes[index]);
+    newNote["color"] = color;
+    console.log("At onClickColorChange: newNote is: ", newNote);
+    this.props.editNote(newNote, index);
+    return;
   }
 
   renderNotes(){
@@ -66,7 +73,7 @@ class Notes extends React.Component{
     const listItems = this.props.notes.map((note, index) =>
       <Draggable bounds="parent" key={index}>
         <li>
-          <a style = {{ textDecoration:"none", color: "#000000", background:"#ffc"}}>  {/*style = {{background:"#cfc"}}*/}       
+          <a style = {{ textDecoration:"none", color: "#000000", background: note.color}}>  {/*style = {{background:"#cfc"}}*/}       
             <h2 style = {{textAlign: "center"}}>
               <InlineEdit 
                 validate={this.validateTitleEdit.bind(this, index)} 
@@ -81,13 +88,13 @@ class Notes extends React.Component{
                 onClick = {this.onClickRemove.bind(this, index)}/>
 
                 <Dropdown style = {{paddingLeft: "7px"}} id="dropdown-custom-1" onSelect={function(evt){console.log(evt)}}>       
-                  <Dropdown.Toggle style = {{background: "#ffc"}}>
+                  <Dropdown.Toggle style = {{background: note.color}}>
                     <Glyphicon glyph="tag"/>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="super-colors" onSelect={function(evt){console.log(evt)}}>
-                    <p onClick= {this.onClickColorChange.bind(this, "#cfc")} style = {{background: "#cfc", textAlign: "center", cursor: "pointer"}}>Cyan</p>
-                    <p onClick= {this.onClickColorChange.bind(this, "#ffc")} style = {{background: "#ffc", textAlign: "center", cursor: "pointer"}}>Yellow</p>
-                    <p onClick= {this.onClickColorChange.bind(this, "#ccf")} style = {{background: "#ccf", textAlign: "center", cursor: "pointer"}}>Purple</p>
+                    <p onClick= {this.onClickColorChange.bind(this, "#cfc", index)} style = {{background: "#cfc", textAlign: "center", cursor: "pointer"}}>Cyan</p>
+                    <p onClick= {this.onClickColorChange.bind(this, "#ffc", index)} style = {{background: "#ffc", textAlign: "center", cursor: "pointer"}}>Yellow</p>
+                    <p onClick= {this.onClickColorChange.bind(this, "#ccf", index)} style = {{background: "#ccf", textAlign: "center", cursor: "pointer"}}>Purple</p>
                   </Dropdown.Menu>
                 </Dropdown>
             </h2>
@@ -112,10 +119,10 @@ class Notes extends React.Component{
       <div className="row">
         <div className="col-md-12" style = {{textAlign: "center"}}>
           <h3>Add New Note</h3>
-          <NoteForm submitBook={this.submitNote.bind(this)}/>
+          <NoteForm submitNote={this.submitNote.bind(this)}/>
         </div>
         <div className="col-md-12" style = {{border: "3px solid black"}}>
-          <h3 style = {{textAlign: "center"}}>My Notes</h3>
+          <h3 style = {{textAlign: "center"}}><u>My Saved Notes</u></h3>
           <ul>
             {this.renderNotes()}
           </ul>

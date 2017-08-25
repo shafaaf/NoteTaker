@@ -21,7 +21,7 @@ export const notesReducer = (state = [], action) => {
       var i = action.index;
       return [
         ...state.slice(0, i), // From the start to the one we want to edit
-        {...state[i], title: action.note.title, description: action.note.description }, //making new object and copy state[i] here and then overwriting title, description as comma separated means add in
+        {...state[i], title: action.note.title, description: action.note.description, color: action.note.color}, //making new object and copy state[i] here and then overwriting title, description as comma separated means add in
         ...state.slice(i+1) //After the one edited till the end
       ];
     
