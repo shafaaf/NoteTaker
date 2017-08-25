@@ -49,7 +49,7 @@ class Notes extends React.Component{
   descriptionChanged(description){
     console.log("At descriptionChanged. description is: ", description);
   }
-
+  
   onClickRemove(index){
     console.log("onClickRemove called. index is: ", index);
     var noteToDelete = this.props.notes[index];
