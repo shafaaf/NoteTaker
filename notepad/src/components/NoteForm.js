@@ -3,7 +3,7 @@ import React from 'react';
 const NoteForm = (props) => {
     let titleInput, descriptionInput = null;
     return (
-      <form 
+      <form
         onSubmit={e => {
           e.preventDefault();
           var input = {

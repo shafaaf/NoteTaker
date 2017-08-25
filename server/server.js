@@ -179,13 +179,19 @@ router.post('/note/add', function(req, res) {
     	var description = req.body.description;
     	console.log("title is: ", title);
     	console.log("description is: ", description);
-		db.query('insert into notestable(title, description)' +
-			' values(${title}, ${description})',
-				req.body)
+		db.one('INSERT INTO notestable(title, description)' +
+			' values($1, $2) RETURNING id, creationtime, description, title', [title, description])
 		.then(function (data) {
 			console.log("data from query is: ", data);
+			var note = {};
+			note.id = data.id;
+			note.creationtime = data.creationtime;
+			note.description = data.description;
+			note.title = data.title;
+			
 			res.status(200)
 			.json({
+				note: note,
 				status: 'success',
 				message: 'Inserted note'
 			});

@@ -54,7 +54,12 @@ export const createNote = (note) => {
   return (dispatch) => {
     return Axios.post(addBookUrl, note)
       .then(response => {
-        console.log("response is: ", response);
+        console.log("response.data is: ", response.data);
+        var noteFromServer = response.data.note;
+        note.id = noteFromServer.id;
+        note.creationtime = noteFromServer.creationtime;
+        note.title = noteFromServer.title;
+        note.description = noteFromServer.description;
         dispatch(createNoteSuccess(note));
       })
       .catch(error => {

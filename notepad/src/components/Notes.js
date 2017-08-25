@@ -99,18 +99,16 @@ class Notes extends React.Component{
   render(){
     let titleInput;
     return(
-    
-       <div className="row">
+      <div className="row">
+        <div className="col-md-12" style = {{textAlign: "center"}}>
+          <h3>Add New Note</h3>
+          <NoteForm submitBook={this.submitNote.bind(this)}/>
+        </div>
         <div className="col-md-12" style = {{border: "3px solid black"}}>
           <h3 style = {{textAlign: "center"}}>My Notes</h3>
           <ul>
             {this.renderNotes()}
           </ul>
-        </div>
-        <div className="col-md-6">
-          <h3>New Note</h3>
-          {/* Import and inject Notes form */}
-         <NoteForm submitBook={this.submitNote.bind(this)}/>
         </div>
       </div>
     );
