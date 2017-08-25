@@ -20,7 +20,7 @@ Make sure npm, node installed.
 ```
 git clone https://github.com/shafaaf/NotesProject.git
 ```
-Install packages
+Install packages on both server and notepad folders
 ```
 npm install
 ```
