@@ -4,10 +4,17 @@ const booksUrl = 'http://localhost:8080/api/note';
 const addBookUrl = 'http://localhost:8080/api/note/add';
 
 // Success Actions
-export const fetchNotesSuccess = (notes) => {
-  console.log("Action dispatched- fetchNotesSuccess. notes is: ", notes);
+export const getNotesSuccess = (notes) => {
+  console.log("Action dispatched- getNotesSuccess. notes is: ", notes);
   return {
-    type: "FETCH_NOTES_SUCCESS",
+    type: "GET_NOTES_SUCCESS",
+    notes
+  }
+};
+export const getCustomNotesSuccess = (notes) => {
+  console.log("Action dispatched- getCustomNotesSuccess. notes is: ", notes);
+  return {
+    type: "GET_CUSTOM_NOTES_SUCCESS",
     notes
   }
 };
@@ -36,15 +43,43 @@ export const deleteNoteSuccess = (note, index) => {
 };
 
 // Async actions
-export const fetchNotes = () => {
-  console.log("Action dispatched- fetchNotes");
+export const getNotes = () => {
+  console.log("Action dispatched- getNotes");
   return (dispatch) => {
     return Axios.get(booksUrl)
       .then(response => {
         console.log("response is: ", response);
-        dispatch(fetchNotesSuccess(response.data.data));
+        dispatch(getNotesSuccess(response.data.data));
       })
       .catch(error => {
+        alert("Error in getting all notes.");
+        throw(error);
+      });
+  };
+};
+export const getCustomNotes = (searchSettings) => {
+  console.log("Action dispatched- getCustomNotes. searchSettings is: ", searchSettings);
+  var flag = 0;
+  var url = booksUrl + "?";
+  if((searchSettings.order != null) && (searchSettings.order != "")){ //order
+    url = url + "&order=" + searchSettings.order;
+  }
+  if(searchSettings.limit != null && (searchSettings.limit != "")){ //limit
+    url = url + "&limit=" + searchSettings.limit;
+  }
+  if(searchSettings.start != null && (searchSettings.start != "")){ //start
+    console.log("entering here");
+    url = url + "&start=" + searchSettings.start;
+  }
+  console.log("final url is: ", url);
+  return (dispatch) => {
+    return Axios.get(url)
+      .then(response => {
+        console.log("response.data is: ", response.data);
+        dispatch(getCustomNotesSuccess(response.data.data));
+      })
+      .catch(error => {
+        alert("Error in getting custom search notes. Make sure Limit is a positive number and Start Point greater than or equal to 1.");
         throw(error);
       });
   };
@@ -64,6 +99,7 @@ export const createNote = (note) => {
         dispatch(createNoteSuccess(note));
       })
       .catch(error => {
+        alert("Error in creating note.");
         throw(error);
       });
   };
@@ -78,7 +114,7 @@ export const editNote = (note, index) => {
         dispatch(editNoteSuccess(note, index));
       })
       .catch(error => {
-        console.log("error is: ", error);
+        alert("Error in editing note.");
         throw(error);
       });
   };
@@ -95,7 +131,7 @@ export const deleteNote = (note, index) => {  // caution note index is differnet
         dispatch(deleteNoteSuccess(note, index));
       })
       .catch(error => {
-        console.log("error is: ", error);
+        alert("Error in deleting note.");
         throw(error);
       });
   };

@@ -12,4 +12,5 @@ CREATE TABLE notesTable (
 );
 
 INSERT INTO notesTable (title, description, color)
-  VALUES ('TestTitle', 'testDescription', 'blue');
+  VALUES ('TestTitle', 'testDescription', '#ffc');
+ 

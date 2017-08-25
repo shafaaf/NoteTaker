@@ -12,7 +12,7 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 // Dispatch fetchBooks On Page Load to get initial list
-store.dispatch(noteActions.fetchNotes());
+store.dispatch(noteActions.getNotes());
 
 render(
   <Provider store={store}>

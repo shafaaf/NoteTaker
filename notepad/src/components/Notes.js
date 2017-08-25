@@ -6,14 +6,20 @@ import { Link } from 'react-router';
 import * as noteActions from '../actions/noteActions';
 import Draggable, {DraggableCore} from 'react-draggable';
 import InlineEdit from 'react-edit-inline';
-import { Button, Glyphicon, DropdownButton, MenuItem, Dropdown } from 'react-bootstrap';
+import { Button, Glyphicon, DropdownButton, MenuItem, Dropdown, Row, Col, FormControl } from 'react-bootstrap';
+
 import './css/notes.css';
 
 class Notes extends React.Component{
   constructor(props){
     super(props);
+
+    // Search settings
+    this.order = null;
+    this.limit = null; 
+    this.start = null; 
   }
-  
+    
   submitNote(input){
     input.color = "#ffc";
     console.log("Submitting note. input is: ", input);
@@ -113,6 +119,81 @@ class Notes extends React.Component{
     return listItems;
   }
 
+  handleOrderChange(e){
+    var value = e.target.value;;
+    console.log("At handleOrderChange: value is: ", value);
+    this.order = value;
+  }
+
+  handleLimitChange(e){
+    var value = e.target.value;;
+    console.log("At handleLimitChange: value is: ", value);
+    this.limit = value;
+  }
+
+  handleStartChange(e){
+    var value = e.target.value;;
+    console.log("At handleStartChange: value is: ", value);
+    this.start = value;
+  }
+
+  handleSubmitCustomSearch(){
+    console.log("At handleSubmitCustomSearch");
+    var searchSettings = {};
+    searchSettings.order = this.order;
+    searchSettings.limit = this.limit;
+    searchSettings.start = this.start;
+    console.log("handleSubmitCustomSearch. searchSettings is: ", searchSettings);
+    this.props.getCustomNotes(searchSettings);
+  }
+
+  renderSettings(){
+    console.log("At renderSettings");
+    return (
+      <div style = {{marginBottom: "20px"}}>
+        <h3>Search Settings</h3>
+        
+        <Row className="show-grid">
+          
+          <Col md={4}>  {/* Dropdown for order*/}
+            <p>Order</p>
+            <select 
+            defaultValue="sadas"
+            onChange={this.handleOrderChange.bind(this)}>
+            <option selected="selected" value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+            </select>
+          </Col>
+
+          <Col md={4}>  {/* Limit input */}
+            <p>Limit</p>
+            <FormControl
+            type="text"
+            placeholder="By default, gets all..."
+            onChange={this.handleLimitChange.bind(this)}/>
+          </Col>
+          
+          <Col md={4}> {/* Start input */}
+            <p>Start Point</p>
+            <FormControl
+              type="text"
+              placeholder="By default, gets from index 1..."
+              onChange={this.handleStartChange.bind(this)}/>
+          </Col>
+        </Row>
+        
+        <Row className="show-grid" style={{marginTop: "10px"}}>
+          <Col>
+              <Button bsStyle="primary" onClick={this.handleSubmitCustomSearch.bind(this)}>Search with these settings!</Button>
+          </Col>
+        </Row>
+
+        
+      
+      </div> 
+    );
+  }
+
   render(){
     let titleInput;
     return(
@@ -121,6 +202,7 @@ class Notes extends React.Component{
           <h3>Add New Note</h3>
           <NoteForm submitNote={this.submitNote.bind(this)}/>
         </div>
+        {this.renderSettings()}
         <div className="col-md-12" style = {{border: "3px solid black"}}>
           <h3 style = {{textAlign: "center"}}><u>My Saved Notes</u></h3>
           <ul>

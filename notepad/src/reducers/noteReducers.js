@@ -11,10 +11,14 @@ export const notesReducer = (state = [], action) => {
         Object.assign({}, action.note)
       ];
     
-    case 'FETCH_NOTES_SUCCESS':
-      console.log("Reducer: FETCH_NOTES_SUCCESS");
+    case 'GET_NOTES_SUCCESS':
+      console.log("Reducer: GET_NOTES_SUCCESS");
       return action.notes;
-    
+
+    case 'GET_CUSTOM_NOTES_SUCCESS':
+      console.log("Reducer: GET_CUSTOM_NOTES_SUCCESS");
+      return action.notes;
+
     case 'EDIT_NOTE_SUCCESS':
       console.log("Reducer: EDIT_NOTE_SUCCESS");
       console.log("Reducer- index is: ", action.index);
