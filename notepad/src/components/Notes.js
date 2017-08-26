@@ -81,6 +81,18 @@ class Notes extends React.Component{
         <li>
           <a style = {{ textDecoration:"none", color: "#000000", background: note.color}}>  {/*style = {{background:"#cfc"}}*/}       
             <h2 style = {{textAlign: "center"}}>
+              
+              <Dropdown style = {{paddingLeft: "7px"}} id="dropdown-custom-1" onSelect={function(evt){console.log(evt)}}>       
+                <Dropdown.Toggle style = {{background: note.color}}>
+                  <Glyphicon glyph="tag"/>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="super-colors" onSelect={function(evt){console.log(evt)}}>
+                  <p onClick= {this.onClickColorChange.bind(this, "#cfc", index)} style = {{background: "#cfc", textAlign: "center", cursor: "pointer"}}>Cyan</p>
+                  <p onClick= {this.onClickColorChange.bind(this, "#ffc", index)} style = {{background: "#ffc", textAlign: "center", cursor: "pointer"}}>Yellow</p>
+                  <p onClick= {this.onClickColorChange.bind(this, "#ccf", index)} style = {{background: "#ccf", textAlign: "center", cursor: "pointer"}}>Purple</p>
+                </Dropdown.Menu>
+              </Dropdown>
+              
               <InlineEdit 
                 validate={this.validateTitleEdit.bind(this, index)} 
                 activeClassName="editing" 
@@ -93,16 +105,7 @@ class Notes extends React.Component{
                 style = {{paddingLeft: "20px"}}
                 onClick = {this.onClickRemove.bind(this, index)}/>
 
-                <Dropdown style = {{paddingLeft: "7px"}} id="dropdown-custom-1" onSelect={function(evt){console.log(evt)}}>       
-                  <Dropdown.Toggle style = {{background: note.color}}>
-                    <Glyphicon glyph="tag"/>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="super-colors" onSelect={function(evt){console.log(evt)}}>
-                    <p onClick= {this.onClickColorChange.bind(this, "#cfc", index)} style = {{background: "#cfc", textAlign: "center", cursor: "pointer"}}>Cyan</p>
-                    <p onClick= {this.onClickColorChange.bind(this, "#ffc", index)} style = {{background: "#ffc", textAlign: "center", cursor: "pointer"}}>Yellow</p>
-                    <p onClick= {this.onClickColorChange.bind(this, "#ccf", index)} style = {{background: "#ccf", textAlign: "center", cursor: "pointer"}}>Purple</p>
-                  </Dropdown.Menu>
-                </Dropdown>
+                
             </h2>
             <p>
               <InlineEdit 

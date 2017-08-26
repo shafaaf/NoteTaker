@@ -3,6 +3,11 @@
   margin:0;
   padding:0;
 }
+
+#dropdown-custom-1{
+  border: none;
+}
+
 body{
   font-family:arial,sans-serif;
   font-size:100%;

@@ -44,7 +44,7 @@ export const deleteNoteSuccess = (note, index) => {
 
 // Async actions
 export const getNotes = () => {
-  console.log("Action dispatched- getNotes");
+  console.log("Action dispatched- getNotes. booksUrl is: ", booksUrl);
   return (dispatch) => {
     return Axios.get(booksUrl)
       .then(response => {
