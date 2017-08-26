@@ -1,4 +1,4 @@
-import Axios from 'axios';
+error import Axios from 'axios';
 
 const booksUrl = 'http://localhost:8080/api/note';
 const addBookUrl = 'http://localhost:8080/api/note/add';
@@ -53,6 +53,7 @@ export const getNotes = () => {
       })
       .catch(error => {
         alert("Error in getting all notes.");
+        console.log("getNotes error: ", )error;
         throw(error);
       });
   };

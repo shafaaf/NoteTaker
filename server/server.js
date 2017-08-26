@@ -13,7 +13,10 @@ var options = {
   promiseLib: promise
 };
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/notes';
+
+//postgres://localhost:5432/notes
+//postgres://lgwdqoex:v2_DAqhvo_zXJAloJCyPiVjiijAftv_D@pellefant.db.elephantsql.com:5432/lgwdqoex
+var connectionString = 'postgres://lgwdqoex:v2_DAqhvo_zXJAloJCyPiVjiijAftv_D@pellefant.db.elephantsql.com:5432/lgwdqoex'; 
 var db = pgp(connectionString);
 
 // configure app to use bodyParser()

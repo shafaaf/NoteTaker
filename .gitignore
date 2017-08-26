@@ -88,5 +88,6 @@ typings/
 # dotenv environment variables file
 .env
 
+*.pem
 
 # End of https://www.gitignore.io/api/macos,node
