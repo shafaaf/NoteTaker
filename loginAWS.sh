@@ -1,2 +1,2 @@
 #!/bin/bash
-ssh -i focus21.pem ec2-user@ec2-54-191-248-93.us-west-2.compute.amazonaws.com
+ssh -i merchantDashboard.pem ec2-user@ec2-54-202-134-240.us-west-2.compute.amazonaws.com

@@ -1,6 +1,5 @@
 # Note Taking App
-
-Done as part of Focus21's interview process.
+A single-page web app that helps keep track of notes. Allows coloring and querying of different notes.
 
 ## Main Technologies Used
 * React
@@ -9,30 +8,28 @@ Done as part of Focus21's interview process.
 * postgress
 
 ## How to use
-* Can add in new notes using "Add New Note" form
-* Initially shows all notes and new ones that get added but can make customized searches.
+* Can add in new notes using the "Add New Note" form. Title and description are both optional.
+* Initially shows all notes but can make customized searches based on order, limit and start index.
 * Can edit notes by clicking on either title or description, and then writing in new text.
-* Can change color of notes for better organization.
-* Can move notes around for better view. However doing this with customized searching will keep new note positions. So move them when not doing any custoimzed searching. Can refresh page to get back old note positions.
+* Can change color of notes for better organization. Initial color is yellow.
+* Can move notes around for better view and organization.
+**However doing this and then doing a customized search as above will keep new customized positions. Therefore, only move aound notes when not searching. Can refresh page to get back old note positions.**
 
 ## Local installation
 Make sure npm, node installed.
 ```
 git clone https://github.com/shafaaf/NotesProject.git
 ```
-Install packages on both server and notepad folders
-```
-npm install
-```
-
-Setup database and run server
+### Setup server
 ```
 cd server
-psql -f notes.sql
-nodemon server.js
+npm install
+node server.js
 ```
-Run React App
+
+### Setup client side react-redux app
 ```
 cd notepad
+npm install
 npm start
 ```
